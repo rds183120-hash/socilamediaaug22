@@ -1,5 +1,4 @@
 import type { Handler } from '@netlify/functions';
-import { AzureOpenAI } from '@azure/openai';
 
 const handler: Handler = async (event) => {
   if (event.httpMethod !== 'POST') {
@@ -28,12 +27,6 @@ const handler: Handler = async (event) => {
       };
     }
 
-    const client = new AzureOpenAI({
-      endpoint,
-      apiKey,
-      apiVersion: '2024-02-01',
-    });
-
     const messages = [
       {
         role: 'system',
@@ -47,11 +40,20 @@ const handler: Handler = async (event) => {
       { role: 'user', content: String(message) },
     ];
 
-    const completion = await client.chat.completions.create({
-      model: deployment,
-      messages,
+    const response = await fetch(`${endpoint.replace(/\/$/, '')}/openai/v1/chat/completions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({ model: deployment, messages }),
     });
 
+    if (!response.ok) {
+      throw new Error(`Azure request failed with status ${response.status}`);
+    }
+
+    const completion = await response.json();
     const reply = completion.choices?.[0]?.message?.content || 'I can help with a content plan, hook, or posting cadence idea.';
 
     return {
