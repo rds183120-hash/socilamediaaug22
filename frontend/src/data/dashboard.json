@@ -1,0 +1,12 @@
+{
+  "stats": [
+    { "label": "Posts This Week", "value": "18" },
+    { "label": "Avg Engagement Rate", "value": "5.8%" },
+    { "label": "Next Scheduled Post", "value": "Thu 2:30 PM" }
+  ],
+  "activity": [
+    { "title": "Instagram Reel", "metric": "Likes +24%", "detail": "Skincare routine edit outperformed benchmark", "tag": "Top Performer" },
+    { "title": "LinkedIn Post", "metric": "Comments +18%", "detail": "Thought leadership thread gained traction", "tag": "Engaged" },
+    { "title": "Pinterest Pin", "metric": "Saves +31%", "detail": "Seasonal content drove repeat saves", "tag": "Save Spike" }
+  ]
+}
